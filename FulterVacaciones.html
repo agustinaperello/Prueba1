@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fulter Vacation Corrector - Documentación</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #374151;
+            background-color: #F9FAFB;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1E3A8A 0%, #3B82F6 100%);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            margin-bottom: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(30, 58, 138, 0.2);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .section {
+            background: white;
+            margin-bottom: 30px;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border-left: 4px solid #3B82F6;
+        }
+
+        .section h2 {
+            color: #1E3A8A;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section h3 {
+            color: #3B82F6;
+            font-size: 1.3rem;
+            margin: 25px 0 15px 0;
+            border-bottom: 2px solid #DBEAFE;
+            padding-bottom: 8px;
+        }
+
+        .summary-box {
+            background: linear-gradient(135deg, #DBEAFE 0%, #EBF4FF 100%);
+            border: 1px solid #3B82F6;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
+        .summary-box h3 {
+            color: #1E3A8A;
+            margin-top: 0;
+            border: none;
+            padding: 0;
+        }
+
+        .country-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .country-card {
+            background: #F8FAFC;
+            border: 1px solid #E5E7EB;
+            border-radius: 8px;
+            padding: 20px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .country-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .country-card h4 {
+            color: #1E3A8A;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .flag {
+            font-size: 1.5rem;
+        }
+
+        .case-box {
+            background: #F0F9FF;
+            border-left: 4px solid #10B981;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .case-box.warning {
+            background: #FFFBEB;
+            border-left-color: #F59E0B;
+        }
+
+        .case-box.error {
+            background: #FEF2F2;
+            border-left-color: #EF4444;
+        }
+
+        .example-box {
+            background: #F9FAFB;
+            border: 1px solid #D1D5DB;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+        }
+
+        .flow-step {
+            display: flex;
+            align-items: center;
+            margin: 15px 0;
+            padding: 15px;
+            background: #F8FAFC;
+            border-radius: 8px;
+            border-left: 3px solid #3B82F6;
+        }
+
+        .step-number {
+            background: #3B82F6;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin: 2px;
+        }
+
+        .badge.success {
+            background: #D1FAE5;
+            color: #065F46;
+        }
+
+        .badge.warning {
+            background: #FEF3C7;
+            color: #92400E;
+        }
+
+        .badge.info {
+            background: #DBEAFE;
+            color: #1E40AF;
+        }
+
+        .highlight {
+            background: #FEF3C7;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .table th,
+        .table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #E5E7EB;
+        }
+
+        .table th {
+            background: #F3F4F6;
+            color: #1F2937;
+            font-weight: 600;
+        }
+
+        .table tr:hover {
+            background: #F9FAFB;
+        }
+
+        .icon {
+            margin-right: 8px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .country-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 Fulter Vacation Corrector</h1>
+            <p>Sistema Automático de Corrección de Balances de Vacaciones</p>
+        </div>
+
+        <!-- Resumen Ejecutivo -->
+        <div class="section">
+            <h2><span class="icon">📋</span>Resumen Ejecutivo</h2>
+            <div class="summary-box">
+                <h3>¿Qué hace el script?</h3>
+                <p><strong>Corrige automáticamente los balances de vacaciones</strong> de empleados Fulter con menos de 1 año de antigüedad, aplicando las reglas específicas de cada país y solucionando los errores iniciales que comete Humand al crear nuevos empleados.</p>
+            </div>
+            
+            <div class="flow-step">
+                <div class="step-number">1</div>
+                <div>
+                    <strong>Obtiene empleados</strong> desde Redash (< 1 año antigüedad)
+                </div>
+            </div>
+            <div class="flow-step">
+                <div class="step-number">2</div>
+                <div>
+                    <strong>Consulta balance actual</strong> desde API de Humand
+                </div>
+            </div>
+            <div class="flow-step">
+                <div class="step-number">3</div>
+                <div>
+                    <strong>Calcula balance correcto</strong> según reglas del país
+                </div>
+            </div>
+            <div class="flow-step">
+                <div class="step-number">4</div>
+                <div>
+                    <strong>Aplica corrección</strong> si hay diferencia (suma/resta días)
+                </div>
+            </div>
+            <div class="flow-step">
+                <div class="step-number">5</div>
+                <div>
+                    <strong>Registra operación</strong> en hoja de log para auditoría
+                </div>
+            </div>
+        </div>
+
+        <!-- Países Soportados -->
+        <div class="section">
+            <h2><span class="icon">🌍</span>Países Soportados</h2>
+            
+            <h3>Grupo A: Mesaniversario de Contratación</h3>
+            <div class="country-grid">
+                <div class="country-card">
+                    <h4><span class="flag">🇨🇱</span>Chile</h4>
+                    <p><strong>Regla:</strong> 1.25 días por mes</p>
+                    <p><strong>Acreditación:</strong> Día de contratación cada mes</p>
+                    <span class="badge success">Estándar</span>
+                </div>
+                
+                <div class="country-card">
+                    <h4><span class="flag">🇨🇷</span>Costa Rica</h4>
+                    <p><strong>Regla:</strong> 1.25 días por mes</p>
+                    <p><strong>Acreditación:</strong> Día de contratación cada mes</p>
+                    <span class="badge success">Estándar</span>
+                </div>
+                
+                <div class="country-card">
+                    <h4><span class="flag">🇩🇴</span>República Dominicana</h4>
+                    <p><strong>Regla:</strong> 1.17 días por mes</p>
+                    <p><strong>Acreditación:</strong> Día de contratación cada mes</p>
+                    <span class="badge success">Estándar</span>
+                </div>
+                
+                <div class="country-card">
+                    <h4><span class="flag">🇪🇨</span>Ecuador</h4>
+                    <p><strong>Regla:</strong> 1.25 días por mes</p>
+                    <p><strong>Acreditación:</strong> Día de contratación cada mes</p>
+                    <span class="badge success">Estándar</span>
+                </div>
+                
+                <div class="country-card">
+                    <h4><span class="flag">🇲🇽</span>México</h4>
+                    <p><strong>Regla:</strong> 1.00 días por mes</p>
+                    <p><strong>Acreditación:</strong> Día de contratación cada mes</p>
+                    <span class="badge success">Estándar</span>
+                </div>
+                
+                <div class="country-card">
+                    <h4><span class="flag">🇵🇦</span>Panamá</h4>
+                    <p><strong>Regla:</strong> 2.73 días por mes</p>
+                    <p><strong>Acreditación:</strong> Día de contratación cada mes</p>
+                    <span class="badge success">Estándar</span>
+                </div>
+                
+                <div class="country-card">
+                    <h4><span class="flag">🇵🇪</span>Perú</h4>
+                    <p><strong>Regla:</strong> 2.50 días por mes</p>
+                    <p><strong>Acreditación:</strong> Día de contratación cada mes</p>
+                    <span class="badge success">Estándar</span>
+                </div>
+            </div>
+            
+            <h3>Grupo B: Primer Día del Mes</h3>
+            <div class="country-grid">
+                <div class="country-card">
+                    <h4><span class="flag">🇺🇾</span>Uruguay</h4>
+                    <p><strong>Regla:</strong> 1.66 días por mes</p>
+                    <p><strong>Acreditación:</strong> 1° de cada mes</p>
+                    <span class="badge success">Estándar</span>
+                </div>
+                
+                <div class="country-card">
+                    <h4><span class="flag">🇳🇮</span>Nicaragua</h4>
+                    <p><strong>Regla:</strong> 2.50 días por mes</p>
+                    <p><strong>Acreditación:</strong> 1° de cada mes</p>
+                    <span class="badge success">Estándar</span>
+                </div>
+                
+                <div class="country-card">
+                    <h4><span class="flag">🇬🇹</span>Guatemala</h4>
+                    <p><strong>Regla:</strong> 1.25 días por mes</p>
+                    <p><strong>Acreditación:</strong> 1° de cada mes</p>
+                    <span class="badge success">Estándar</span>
+                </div>
+            </div>
+            
+            <h3>Grupo C: Días Trabajados (Especial)</h3>
+            <div class="country-grid">
+                <div class="country-card">
+                    <h4><span class="flag">🇦🇷</span>Argentina</h4>
+                    <p><strong>Regla:</strong> 1 día cada 20 días trabajados</p>
+                    <p><strong>Especial:</strong> Lógica por semestre de contratación</p>
+                    <p><strong>Acreditación:</strong> Continua (cada 20 días)</p>
+                    <span class="badge warning">Lógica Compleja</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Casos Especiales Argentina -->
+        <div class="section">
+            <h2><span class="icon">🇦🇷</span>Argentina - Casos Especiales</h2>
+            
+            <h3>Empleados Año Actual (2025)</h3>
+            
+            <div class="case-box">
+                <h4><strong>Caso 1: Contratación Enero - Junio</strong></h4>
+                <p><strong>Balance Correcto:</strong> <span class="highlight">0 días</span></p>
+                <p><strong>Razón:</strong> Según ley argentina, vacaciones corresponden al año siguiente</p>
+                <p><strong>Quién Acredita:</strong> Humand automáticamente el 1° de octubre (14 días completos)</p>
+                <p><strong>Acción Script:</strong> Mantener balance en 0 días hasta octubre</p>
+                
+                <div class="example-box">
+                    <strong>Ejemplo:</strong> Agus Perello (01/01/2025)<br>
+                    • Balance actual: 14 días (error inicial de Humand)<br>
+                    • Balance correcto: 0 días<br>
+                    • Acción Script: RESTAR 14 días → 0 días<br>
+                    • 1° Octubre: Humand acredita 14 días automáticamente
+                </div>
+            </div>
+            
+            <div class="case-box warning">
+                <h4><strong>Caso 2: Contratación Julio - Diciembre</strong></h4>
+                <p><strong>Balance Correcto:</strong> <span class="highlight">1 día cada 20 días trabajados</span></p>
+                <p><strong>Razón:</strong> Vacaciones proporcionales en el mismo año</p>
+                <p><strong>Quién Acredita:</strong> El Script el 1° de octubre (todos los días de golpe)</p>
+                <p><strong>Acción Script:</strong> Mantener en 0 días hasta octubre, luego acreditar total</p>
+                
+                <div class="example-box">
+                    <strong>Ejemplo:</strong> Empleado (15/08/2025)<br>
+                    • Agosto-Septiembre: Balance = 0 días<br>
+                    • 1° Octubre: 84 días trabajados ÷ 20 = 4 períodos<br>
+                    • Acción Script: +4 días de golpe<br>
+                    • Resultado: 4 días acreditados el 1° octubre
+                </div>
+            </div>
+            
+        </div>
+
+        <!-- Tipos de Corrección -->
+        <div class="section">
+            <h2><span class="icon">🔧</span>Tipos de Corrección</h2>
+            
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Tipo</th>
+                        <th>Situación</th>
+                        <th>Operación</th>
+                        <th>Ejemplo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="badge success">BALANCE_CORRECTION_EXCESS</span></td>
+                        <td>Empleado tiene MÁS días de los que debería</td>
+                        <td>SUBTRACTION</td>
+                        <td>Tiene 14, debería tener 0 → Restar 14</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge warning">BALANCE_CORRECTION_DEFICIT</span></td>
+                        <td>Empleado tiene MENOS días de los que debería</td>
+                        <td>ADDITION</td>
+                        <td>Tiene 2, debería tener 5 → Sumar 3</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge info">VACATION_ACCRUAL</span></td>
+                        <td>Acreditación normal incremental</td>
+                        <td>ADDITION</td>
+                        <td>Cumplió 20 días → Sumar 1 día</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Ejemplos Prácticos -->
+        <div class="section">
+            <h2><span class="icon">💡</span>Ejemplos Prácticos</h2>
+            
+            <h3>Caso Real: Agus Perello</h3>
+            <div class="example-box">
+                <strong>Datos:</strong><br>
+                • ID: agus@humand.co<br>
+                • Contratación: 01/01/2025 (primer semestre)<br>
+                • Balance actual en Humand: 14 días<br>
+                • Días trabajados: 161 días<br><br>
+                
+                <strong>Análisis del Script:</strong><br>
+                • Detecta: Empleado primer semestre 2025<br>
+                • Balance correcto: 0 días<br>
+                • Diferencia: 14 - 0 = 14 días de exceso<br>
+                • Acción: RESTAR 14 días<br>
+                • Resultado: 0 días ✅
+            </div>
+            
+            <h3>Caso Hipotético: Empleado Agosto 2025</h3>
+            <div class="example-box">
+                <strong>Datos:</strong><br>
+                • Contratación: 15/08/2025 (segundo semestre)<br>
+                • Balance actual en Humand: 14 días<br>
+                • Días trabajados: 120 días<br><br>
+                
+                <strong>Análisis del Script:</strong><br>
+                • Detecta: Empleado segundo semestre 2025<br>
+                • Balance correcto: 6 días (120÷20 = 6 períodos)<br>
+                • Diferencia: 14 - 6 = 8 días de exceso<br>
+                • Acción: RESTAR 8 días<br>
+                • Resultado: 6 días ✅
+            </div>
+        </div>
+
+        <!-- Configuración y Ejecución -->
+        <div class="section">
+            <h2><span class="icon">⚙️</span>Configuración y Ejecución</h2>
+            
+            <h3>Modos de Ejecución</h3>
+            <div class="case-box">
+                <h4><strong>Modo Simulación (Recomendado)</strong></h4>
+                <p>Ejecuta <code>runTestMode()</code> para ver qué haría el script sin hacer cambios reales.</p>
+            </div>
+            
+            <div class="case-box warning">
+                <h4><strong>Modo Producción (Cuidado)</strong></h4>
+                <p>Ejecuta <code>runProductionMode()</code> para aplicar correcciones reales en Humand.</p>
+            </div>
+            
+            <h3>Fuentes de Datos</h3>
+            <ul>
+                <li><strong>Redash:</strong> Lista de empleados < 1 año</li>
+                <li><strong>Humand API:</strong> Balances actuales de vacaciones</li>
+                <li><strong>Google Sheets:</strong> Log de acreditaciones realizadas</li>
+            </ul>
+            
+            <h3>Registro de Operaciones</h3>
+            <p>Todas las operaciones se registran en una hoja de Google Sheets con:</p>
+            <ul>
+                <li>Fecha y hora de la operación</li>
+                <li>Datos del empleado</li>
+                <li>Días acreditados/restados</li>
+                <li>Tipo de operación (ADDITION/SUBTRACTION)</li>
+                <li>Observaciones detalladas</li>
+            </ul>
+        </div>
+
+        <!-- Calculadora Interactiva -->
+        <div class="section">
+            <h2><span class="icon">🧮</span>Calculadora Interactiva de Vacaciones</h2>
+            
+            <div class="summary-box">
+                <h3>Simula el cálculo del script</h3>
+                <p>Ingresa los datos de un empleado para ver qué balance de vacaciones debería tener según las reglas del sistema.</p>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 20px;">
+                <!-- Formulario -->
+                <div>
+                    <h3>Datos del Empleado</h3>
+                    
+                    <div style="margin-bottom: 15px;">
+                        <label style="display: block; margin-bottom: 5px; font-weight: 600;">País:</label>
+                        <select id="country" style="width: 100%; padding: 8px; border: 1px solid #D1D5DB; border-radius: 4px;">
+                            <option value="">Seleccionar país...</option>
+                            <option value="Chile">🇨🇱 Chile</option>
+                            <option value="Costa Rica">🇨🇷 Costa Rica</option>
+                            <option value="Republica Dominicana">🇩🇴 República Dominicana</option>
+                            <option value="Ecuador">🇪🇨 Ecuador</option>
+                            <option value="Mexico">🇲🇽 México</option>
+                            <option value="Panama">🇵🇦 Panamá</option>
+                            <option value="Peru">🇵🇪 Perú</option>
+                            <option value="Uruguay">🇺🇾 Uruguay</option>
+                            <option value="Nicaragua">🇳🇮 Nicaragua</option>
+                            <option value="Guatemala">🇬🇹 Guatemala</option>
+                            <option value="ARGENTINA">🇦🇷 Argentina</option>
+                        </select>
+                    </div>
+                    
+                    <div style="margin-bottom: 15px;">
+                        <label style="display: block; margin-bottom: 5px; font-weight: 600;">Fecha de Contratación:</label>
+                        <input type="date" id="hireDate" style="width: 100%; padding: 8px; border: 1px solid #D1D5DB; border-radius: 4px;">
+                    </div>
+                    
+                    <div style="margin-bottom: 15px;">
+                        <label style="display: block; margin-bottom: 5px; font-weight: 600;">Fecha de Cálculo:</label>
+                        <input type="date" id="calcDate" style="width: 100%; padding: 8px; border: 1px solid #D1D5DB; border-radius: 4px;">
+                    </div>
+                    
+                    <button onclick="calculateVacations()" style="width: 100%; padding: 12px; background: #3B82F6; color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;">
+                        🧮 Calcular Vacaciones
+                    </button>
+                </div>
+                
+                <!-- Resultado -->
+                <div>
+                    <h3>Resultado del Cálculo</h3>
+                    <div id="result" style="background: #F9FAFB; border: 1px solid #E5E7EB; border-radius: 8px; padding: 20px; min-height: 200px;">
+                        <p style="color: #6B7280; text-align: center; margin-top: 60px;">
+                            Completa los datos y presiona "Calcular Vacaciones" para ver el resultado.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div style="text-align: center; margin-top: 40px; padding: 20px; color: #6B7280; border-top: 1px solid #E5E7EB;">
+            <p><strong>Fulter Vacation Corrector</strong> - Sistema desarrollado para automatizar la gestión de vacaciones según las leyes laborales de cada país.</p>
+            <p style="margin-top: 10px; font-size: 0.9rem;">Documentación actualizada: Junio 2025</p>
+        </div>
+
+        <script>
+            const countryRules = {
+                "Chile": { type: "monthly", daysPerMonth: 1.25 },
+                "Costa Rica": { type: "monthly", daysPerMonth: 1.25 },
+                "Republica Dominicana": { type: "monthly", daysPerMonth: 1.17 },
+                "Ecuador": { type: "monthly", daysPerMonth: 1.25 },
+                "Mexico": { type: "monthly", daysPerMonth: 1.00 },
+                "Panama": { type: "monthly", daysPerMonth: 2.73 },
+                "Peru": { type: "monthly", daysPerMonth: 2.50 },
+                "Uruguay": { type: "monthly", daysPerMonth: 1.66 },
+                "Nicaragua": { type: "monthly", daysPerMonth: 2.50 },
+                "Guatemala": { type: "monthly", daysPerMonth: 1.25 },
+                "ARGENTINA": { type: "days_worked", daysPerPeriod: 1, periodDays: 20 }
+            };
+
+            document.getElementById('calcDate').value = new Date().toISOString().split('T')[0];
+
+            function calculateDaysDifference(startDate, endDate) {
+                const oneDay = 24 * 60 * 60 * 1000;
+                return Math.floor((endDate - startDate) / oneDay);
+            }
+
+            function calculateMonthsDifference(startDate, endDate) {
+                const start = new Date(startDate);
+                const end = new Date(endDate);
+                let months = (end.getFullYear() - start.getFullYear()) * 12;
+                months += end.getMonth() - start.getMonth();
+
+                if (end.getDate() < start.getDate()) {
+                    months -= 1;
+                }
+
+                return months;
+            }
+
+            function calculateVacations() {
+                const country = document.getElementById('country').value;
+                const hireDateStr = document.getElementById('hireDate').value;
+                const calcDateStr = document.getElementById('calcDate').value;
+                const resultDiv = document.getElementById('result');
+
+                if (!country) {
+                    resultDiv.innerHTML = '<p style="color: #EF4444;">❌ Por favor selecciona un país</p>';
+                    return;
+                }
+
+                if (!hireDateStr || !calcDateStr) {
+                    resultDiv.innerHTML = '<p style="color: #EF4444;">❌ Por favor completa las fechas</p>';
+                    return;
+                }
+
+                const hireDate = new Date(hireDateStr);
+                const calcDate = new Date(calcDateStr);
+
+                if (calcDate < hireDate) {
+                    resultDiv.innerHTML = '<p style="color: #EF4444;">❌ La fecha de cálculo no puede ser anterior a la fecha de contratación</p>';
+                    return;
+                }
+
+                const rule = countryRules[country];
+                let resultHTML = `<p><strong>País:</strong> ${country}</p>`;
+                resultHTML += `<p><strong>Contratación:</strong> ${hireDate.toLocaleDateString()}</p>`;
+                resultHTML += `<p><strong>Fecha de cálculo:</strong> ${calcDate.toLocaleDateString()}</p>`;
+
+                if (rule.type === "monthly") {
+                    const months = calculateMonthsDifference(hireDate, calcDate);
+                    const vacationDays = +(months * rule.daysPerMonth).toFixed(2);
+
+                    resultHTML += `<p><strong>Meses trabajados:</strong> ${months}</p>`;
+                    resultHTML += `<p><strong>Días de vacaciones calculados:</strong> ${vacationDays}</p>`;
+                } else if (rule.type === "days_worked") {
+                    const daysWorked = calculateDaysDifference(hireDate, calcDate);
+                    const periods = Math.floor(daysWorked / rule.periodDays);
+                    const vacationDays = periods * rule.daysPerPeriod;
+
+                    resultHTML += `<p><strong>Días trabajados:</strong> ${daysWorked}</p>`;
+                    resultHTML += `<p><strong>Días de vacaciones calculados:</strong> ${vacationDays}</p>`;
+                } else {
+                    resultHTML += `<p style="color: #EF4444;">❌ No se encontró una regla válida para este país.</p>`;
+                }
+
+                resultDiv.innerHTML = resultHTML;
+            }
+        </script>
